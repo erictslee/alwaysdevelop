@@ -1,0 +1,56 @@
+.card-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card-group .card {
+    flex: 1 0 300px;
+    cursor: pointer;
+}
+
+.card-group .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.comment-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.comment-date {
+    white-space: nowrap;
+}
+
+.subtitle1 {
+    background-color: antiquewhite;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.comment-list{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.modal-dialog .modal-body{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.modal-dialog .modal-body .form-control {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.comments{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}

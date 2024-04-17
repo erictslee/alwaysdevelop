@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="post.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>프로필 수정</title>
+</head>
+
+<script type="module">
+
+    // Firebase SDK 라이브러리 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc, getDocs, doc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    // Firebase 구성 정보 설정
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyARY8uABRSypQJirp3PshlEYzjhDFgO5OE",
+        authDomain: "sparta-c5c78.firebaseapp.com",
+        projectId: "sparta-c5c78",
+        storageBucket: "sparta-c5c78.appspot.com",
+        messagingSenderId: "291620095748",
+        appId: "1:291620095748:web:ec8323f6ff0ba1c0483251",
+        measurementId: "G-XM6FEVSZFB"
+    };
+
+
+    // Firebase 인스턴스 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 프로필 modal 선언
+    const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+
+    // 수정 시 modal 선언
+    const modifyModal = new bootstrap.Modal(document.getElementById('modifyModal'));
+
+    // 삭제 시 modal 선언
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+    let currentRow = null;
+
+    function openPostModal(row) {
+        if (row) {
+            const profileImg = document.getElementById('profile-img');
+            const nameLabel = document.getElementById('name-label');
+            const mbtiLabel = document.getElementById('mbti-label');
+            const blogLabel = document.getElementById('blog-label');
+            const advantageLabel = document.getElementById('user-advantage');
+            const teamworkStyleLabel = document.getElementById('user-teamworkStyle');
+
+            const name = row['name'];
+
+            profileImg.src = row['img'];
+            nameLabel.innerHTML = `<h5>${name}</h5>`;
+            mbtiLabel.textContent = row['mbti'];
+            blogLabel.innerHTML = `<a target="_blank" href="${row['blog']}">${name}의 블로그</a>`;
+            advantageLabel.textContent = row['desc'];
+            teamworkStyleLabel.textContent = row['desc'];
+
+            displayComments(currentRow['id']);
+
+            profileModal.show();
+        }
+        else {
+            alert("데이터를 읽어오는데 문제가 발생했습니다.");
+        }
+    }
+
+
+    //#region Util
+
+    // 날짜 포맷팅 함수
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    //#endregion
+
+
+    //#region Comment
+    const commentText = document.getElementById('commentText');
+    const commentCharCount = document.getElementById('commentCharCount');
+
+    
+
+    // 댓글 입력 필드 초기화
+    function initCommentTextField() {
+        commentText.value = '';
+        commentCharCount.textContent = '0';
+    }
+
+    // 댓글 목록 표시 함수
+    async function displayComments(postId) {
+        const commentList = document.querySelector('.comment-list');
+        commentList.innerHTML = '';
+
+        const q = query(collection(db, 'comments'), where('postId', '==', postId));
+        const querySnapshot = await getDocs(q);
+        const comments = querySnapshot.docs.map((doc) => doc.data());
+
+        // 댓글을 최신 순으로 정렬
+        comments.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+
+        comments.forEach((commentData) => {
+        const commentElement = document.createElement('div');
+        commentElement.classList.add('comment', 'mb-3');
+        // 방명록과 댓글이 겹칠 경우 분리하기
+        commentElement.innerHTML = `
+            <div class="d-flex">
+                <div class="comment-content flex-grow-1">
+                    <p>${commentData.content}</p>
+                </div>
+                <div class="comment-date text-muted ms-3">
+                    <small>${formatDate(commentData.timestamp.toDate())}</small>
+                </div>
+            </div>
+        `;
+        commentList.appendChild(commentElement);
+    });
+    }
+    //#endregion
+
+
+    //#region Event
+    // 프로필 모달이 열릴 때 댓글 목록 표시
+    // profileModal._element.addEventListener('shown.bs.modal', function () {
+    //     if (currentRow) {
+    //         displayComments(currentRow['id']);
+    //     }
+    // });
+
+    // 페이지가 새로고침되었을 때 캐시된 정보가 안바뀌는 경우 방지
+    window.addEventListener('beforeunload', (event) => {
+        event.preventDefault();
+        console.log("페이지 새로고침 됨");
+        currentRow = null;
+    })
+    //postModal이 닫힐 때 초기화
+    profileModal._element.addEventListener('hidden.bs.modal', function () {
+        initCommentTextField();
+    });
+
+
+    modifyModal._element.addEventListener('hidden.bs.modal', function () {
+        openPostModal(currentRow);
+    });
+
+    deleteModal._element.addEventListener('hidden.bs.modal', function () {
+        openPostModal(currentRow);
+    });
+
+    $("#modBtn").click(async function () {
+        profileModal.hide();
+        modifyModal.show();
+
+    })
+
+    $("#delBtn").click(async function () {
+        profileModal.hide();
+        deleteModal.show();
+    })
+
+    // input field의 내용이 변경될 때마다 호출되는 이벤트
+    // 숫자 제한에서 얼마나 입력되었는지 표기함
+    commentText.addEventListener('input', function () {
+        const charCount = commentText.value.length;
+        commentCharCount.textContent = charCount;
+    })
+
+    // 댓글 작성 버튼 클릭 이벤트 처리
+    $("#commentSubmit").click(async function () {
+        const comment = commentText.value.trim();
+
+        if (comment !== '') {
+            const commentData = {
+                postId: currentRow['id'],
+                content: comment,
+                timestamp: new Date()
+            };
+
+            try {
+                const docRef = await addDoc(collection(db, 'comments'), commentData);
+                console.log('Comment added with ID: ', docRef.id);
+
+                initCommentTextField();
+
+                // 댓글 목록 갱신
+                displayComments(currentRow['id']);
+            } catch (error) {
+                console.error('Error adding comment: ', error);
+            }
+        }
+    });
+
+    //#endregion
+
+
+
+    // class가 card인 것을 찾은 뒤 click 이벤트 등록
+    // card가 동적으로 생성되므로 해당 코드를 그대로 사용하지말기
+    // 생성되는 카드마다 이벤트 추가하여 사용
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', async function () {
+
+            const cardId = this.getAttribute('data-id');
+            console.log("card id : " + cardId);
+            if (currentRow == null || currentRow['id'] != cardId) {
+                if (currentRow)
+                    currentRow = null;
+                console.log("id 다름");
+                let docs = await getDocs(collection(db, "members"));
+
+                docs.forEach((doc) => {
+                    console.log(1);
+                    let row = doc.data();
+                    console.log(row['id']);
+                    console.log(row['name']);
+                    console.log(row['password']);
+                    console.log(row['blog']);
+
+                    if (row['id'] == cardId) {
+                        currentRow = row;
+                    }
+                })
+            }
+
+            openPostModal(currentRow);
+        });
+    });
+
+</script>
+
+
+<body>
+    <div class="card-group">
+        <!-- 테스트용 카드, 카드 만들때 data-id 필요 -->
+        <div class="card" data-id="1">
+            <div class="card-body">
+                <h5 class="card-title">Card 1</h5>
+                <p class="card-text">Click to open popup.</p>
+            </div>
+        </div>
+        <div class="card" data-id="d904bc82-e55b-8220-513c-fec0028d8088">
+            <div class="card-body">
+                <h5 class="card-title">Card 2</h5>
+                <p class="card-text">Click to open popup.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileModal">
+        프로필 수정
+    </button>
+
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">멤버 소개</h5>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn me-2" id="modBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 20 20">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn me-2" id="delBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 20 20">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="profile.jpg" alt="프로필 이미지" class="img-fluid rounded mb-3 profile-img" id="profile-img">
+                        </div>
+                        <div class="col-md-5">
+                            &nbsp
+                            <div class="mb-3"><label for="user-name" id="name-label"></label></div>
+                            <div class="mb-3"><label for="user-name" id="mbti-label"></label></div>
+                            <div class="mb-3"><label for="blog-name" id="blog-label"><a target="_blank" href="https://www.naver.com/"></a></label></div>
+                        </div>
+                    </div>
+                    <h6 class="subtitle1"><b>장점</b></h6>
+                    <div class="form-control description-scroll" id="user-advantage" style="max-height: 100px; overflow-y: auto;"></div>
+                    &nbsp
+                    <h6 class="subtitle1"><b>나만의 협업 스타일</b></h6>
+                    <div class="form-control description-scroll" id="user-teamworkStyle" style="max-height: 100px; overflow-y: auto;"></div>
+                </div>
+                <div class="comments mt-4">
+                    <h6 class="subtitle1"><b>방명록</b></h6>
+                    <div class="comment-list" style="max-height: 100px; overflow-y: auto;">
+                        <!-- 댓글 목록이 여기에 동적으로 추가됩니다 -->
+                    </div>
+                    <div class="comment-form mt-3">
+                        <textarea class="form-control" id="commentText" rows="2" placeholder="방명록을 남겨주세요 (최대 120자)"
+                            maxlength="120"></textarea>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted"><span id="commentCharCount">0</span>/120자</small>
+                            <button type="button" class="btn btn-primary" id="commentSubmit">방명록 작성</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
