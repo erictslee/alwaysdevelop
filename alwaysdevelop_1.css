@@ -1,0 +1,129 @@
+/*타이틀*/
+.mytitle {
+  margin: 0px auto 0px auto;
+  height: 200px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  font-family: "Moirai One", system-ui;
+  font-weight: 1000;
+  font-style: normal;
+  cursor: pointer;
+}
+
+/*타이틀 블러처리 및 배경사진 설정*/
+.mytitle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 90px;
+  width: 100%;
+  height: 250px;
+  background-image: url("https://velog.velcdn.com/images/eirclee/post/8a40a89f-e8f7-4466-8617-394b4e047dbf/image.png");
+  background-size: cover;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+/*카드묶음*/
+.mycards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  margin: 100px 50px 50px 50px;
+  cursor: pointer;
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  padding: 30px;
+  background-color: rgb(245, 245, 245);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
+}
+
+/*카드*/
+.card {
+  transition: transform 0.3s ease;
+
+}
+
+/*카드 호버링 기능*/
+.card:hover {
+  transform: scale(1.15);
+}
+
+
+/*등록하기창*/
+.mypostingbox {
+  width: 500px;
+  height: 500px;
+  margin: 30px auto 0px auto;
+  padding: 50px 20px 20px 20px;
+  box-shadow: 0px 0px 10px 0px black;
+  border-radius: 20px;
+  background-color: white;
+}
+
+/*모달창 내부 버튼*/
+.modalbtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container>button {
+  display: inline-block;
+  /* 인라인 블록 요소로 설정하여 가로 정렬 */
+  width: auto;
+  /* 너비 자동으로 조정 */
+  height: auto;
+  /* 높이 자동으로 조정 */
+  padding-left: 60px;
+  /* 내부 여백 제거 */
+  border-radius: 10px;
+  /* 테두리 제거 */
+  color: black;
+  /* 텍스트 색상 설정 */
+}
+
+/*등록하기 창 내 닫기 버튼*/
+.btn-close {
+  display: inline-block;
+  /* 인라인 블록 요소로 설정하여 가로 정렬 */
+  width: auto;
+  /* 너비 자동으로 조정 */
+  height: auto;
+  /* 높이 자동으로 조정 */
+  padding-left: 60px;
+  /* 내부 여백 제거 */
+  border-radius: 10px;
+  /* 테두리 제거 */
+  color: black;
+  /* 텍스트 색상 설정 */
+}
+
+/*등록하기 창 내 버튼 간 간격*/
+.mybtn>button {
+  margin: 5px;
+}
+
+.nav-pills .nav-item {
+  margin-right: 10px;
+  /* 각 버튼에 오른쪽 마진 추가 */
+  display: inline-block;
+  /* 버튼들이 인라인으로 표시되도록 설정 */
+}
+
+/* 마지막 버튼의 마진 제거 */
+.nav-pills .nav-item:last-child {
+  margin-right: 0;
+}
