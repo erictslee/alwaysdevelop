@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <title>Delete data</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Delete data</title>
 </head>
+
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="delete.js"></script>
     <div id="data-container"></div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        
         // Firebase 설정
         const firebaseConfig = {
             apiKey: "AIzaSyAf8i7uuYEqOusCfsnjCsvX2MT-ewq2tTM",
@@ -26,63 +32,41 @@
             measurementId: "G-DM95L40522"
         };
 
-        // Firebase 초기화
+
+        // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const db = getFirestore(app);
 
-        // id의 자식 속성을 차례로 출력하는 함수
-        function displayChildProperties(data) {
-            const dataContainer = document.getElementById('data-container');
-            let html = '';
-
-            for (const key in data) {
-                if (data.hasOwnProperty(key) && key == "idd") {
-                    html += `<p>${key}: ${JSON.stringify(data[key])}</p>`;
-                }
-            }
-
-            dataContainer.innerHTML = html;
-        }
-
-        // Firebase에서 데이터 가져오기
-        const dataRef = ref(database, 'id');
-        onValue(dataRef, (snapshot) => {
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                displayChildProperties(data);
-            } else {
-                console.log("No data available");
-            }
-        });
     </script>
 
-<button onclick="openModal('enterpw')"> 삭제 </button>
-<div id="enterpw" class = "modal">
-    <div class ="modal-content">
-        <p>비밀번호를 입력하세요</p>
-        <p> PW : <input id= "pw" type="password"></p>
-        <div class="button-container">
-        <button onclick="CheckPW()">확인</button>
+    <button onclick="eventModal('enterpw')"> 삭제 </button>
+    <div id="enterpw" class="modal">
+        <div class="modal-content">
+            <p>비밀번호를 입력하세요</p>
+            <p> PW : <input id="pw" type="password"></p>
+            <div class="button-container">
+                <button onclick="CheckPW()">확인</button>
+            </div>
         </div>
     </div>
-</div>
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <p>삭제하시겠습니까?</p>
-        <div class="button-container">
-            <button onclick="confirmDelete()">예</button>
-            <button onclick="closeModal('modal');cancle()">아니오</button>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p>삭제하시겠습니까?</p>
+            <div class="button-container">
+                <button onclick="confirmDelete()">예</button>
+                <button onclick="eventModal('modal');cancle()">아니오</button>
+            </div>
         </div>
     </div>
-</div>
-<div id="errormodal" class="modal">
-    <div class="modal-content">
-        <p>오류가 발생했습니다.</p>
-        <p>비밀번호를 다시 확인해주세요.</p>
-        <div class="button-container">
-            <button onclick="closeModal('errormodal')">확인</button>
+    <div id="errormodal" class="modal">
+        <div class="modal-content">
+            <p>오류가 발생했습니다.</p>
+            <p>비밀번호를 다시 확인해주세요.</p>
+            <div class="button-container">
+                <button onclick="eventModal('errormodal')">확인</button>
+            </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>
