@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>Delete data</title>
+</head>
+<body>
+    <script src="delete.js"></script>
+    <div id="data-container"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+        // Firebase 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyAf8i7uuYEqOusCfsnjCsvX2MT-ewq2tTM",
+            authDomain: "test-921f8.firebaseapp.com",
+            projectId: "test-921f8",
+            storageBucket: "test-921f8.appspot.com",
+            messagingSenderId: "320684433449",
+            appId: "1:320684433449:web:7207e85a411cc42af57c38",
+            measurementId: "G-DM95L40522"
+        };
+
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // id의 자식 속성을 차례로 출력하는 함수
+        function displayChildProperties(data) {
+            const dataContainer = document.getElementById('data-container');
+            let html = '';
+
+            for (const key in data) {
+                if (data.hasOwnProperty(key) && key == "idd") {
+                    html += `<p>${key}: ${JSON.stringify(data[key])}</p>`;
+                }
+            }
+
+            dataContainer.innerHTML = html;
+        }
+
+        // Firebase에서 데이터 가져오기
+        const dataRef = ref(database, 'id');
+        onValue(dataRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                displayChildProperties(data);
+            } else {
+                console.log("No data available");
+            }
+        });
+    </script>
+
+<button onclick="openModal('enterpw')"> 삭제 </button>
+<div id="enterpw" class = "modal">
+    <div class ="modal-content">
+        <p>비밀번호를 입력하세요</p>
+        <p> PW : <input id= "pw" type="password"></p>
+        <div class="button-container">
+        <button onclick="CheckPW()">확인</button>
+        </div>
+    </div>
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <p>삭제하시겠습니까?</p>
+        <div class="button-container">
+            <button onclick="confirmDelete()">예</button>
+            <button onclick="closeModal('modal');cancle()">아니오</button>
+        </div>
+    </div>
+</div>
+<div id="errormodal" class="modal">
+    <div class="modal-content">
+        <p>오류가 발생했습니다.</p>
+        <p>비밀번호를 다시 확인해주세요.</p>
+        <div class="button-container">
+            <button onclick="closeModal('errormodal')">확인</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
