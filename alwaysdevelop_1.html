@@ -17,9 +17,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Moirai+One&display=swap" rel="stylesheet">
- 
+  <link rel="stylesheet" href="alwaysdevelop_1.css">
+
   <script type="module">
-    // Firebase SDK 라이브러리 가져오기
+    // Firebase SDK 라이브러리 가져오기 test text
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
     import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -96,7 +97,8 @@
       </div>`;
       $('#card').append(temp_html);
     });
-
+   
+  
   </script>
 </head>
 
@@ -109,11 +111,14 @@
       </a>
 
       <ul class="nav nav-pills">
+        
         <li class="nav-item"><a href="https://teamsparta.notion.site/8ad28066b39e456da73213cf2ce280f9"
             class="btn btn-dark" aria-current="page">Notion</a></li>
         <li class="nav-item"><a href="https://github.com/erictslee/alwaysdevelop" class="btn btn-secondary"
             aria-current="page">Git Hub</a></li>
+            <i class="fa-brands fa-github"></i>
         <button type="button" class="btn btn-primary active btn-open-modal">등록하기</button>
+        
       </ul>
     </header>
   </div>
@@ -122,8 +127,9 @@
   <div class="mytitle" onclick="window.location.reload();">
     <p></p>
     <p></p>
-    <h1 style="font-size: 90px;">내일도 개발하조</h1>
-    <p3>오늘도 내일도 모레도 개발하조</p>
+    <h1 style="font-size: 100px;">내일도 개발하조</h1>
+    <p></p>
+    <h3>오늘도 내일도 모레도 개발하조</h3>
     <p style="font-size: 25px; color:rgb(30, 201, 138)"> </p>
   </div>
 
@@ -167,7 +173,7 @@
       modal.style.display = "flex";
 
     });
-    /*모달 닫기*/
+    /*모달 닫기 ㅇㅇ*/
     btnCloseModal.addEventListener("click", () => {
       modal.style.display = "none";
     });
