@@ -210,32 +210,6 @@
         $("#password-check-input").val('');
     });
 
-    // 파이어베이스에 데이터 저장
-    $("#postingbtn").click(async function () {
-
-        let nickname = $('#nickname').val();
-        let password = $('#password').val();
-        let image = $('#image').val();
-        let name = $('#name').val();
-        let mbti = $('#mbti').val();
-        let blog = $('#blog').val();
-        let desc = $('#desc').val();
-
-        let doc = {
-            'nickname': nickname,
-            'password': password,
-            'image': image,
-            'name': name,
-            'mbti': mbti,
-            'blog': blog,
-            'desc': desc,
-        };
-
-        await addDoc(collection(db, "members"), doc);
-        alert('저장완료!');
-        window.location.reload();
-    })
-
 
     $("#modify-btn").click(async function () {
         profileModal.hide();
