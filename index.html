@@ -1,0 +1,148 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+    <title>오늘도코딩하조</title>
+
+</head>
+
+<body>
+    <div class="createModal">
+        <form class="createM_body" id="createForm">
+            <h2>카드 생성</h2>
+            <input type="text" id="image" placeholder="이미지주소를 입력하세요" autofocus />
+            <input type="text" id="name" placeholder="이름을 입력하세요" autofocus />
+            <input type="text" id="mbti" placeholder="mbti를 입력하세요" autofocus />
+            <input type="text" id="blog" placeholder="블로그주소 입력하세요" autofocus />
+            <input type="text" id="desc" placeholder="자기소개 한 줄" autofocus />
+            <div>
+                <button id="postingbtn">등록하기</button>
+                <button class="closeCModal_btn">닫기</button>
+            </div>
+        </form>
+    </div>
+
+    <!--수정 모달-->
+    <div class="modal fade" id="modifyModal" aria-hidden="true" aria-labelledby="modifyModalLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel">유저 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="modifyName" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="modifyName" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyNickname" class="form-label">별명</label>
+                        <input type="text" class="form-control" id="modifyNickname" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyImage" class="form-label">이미지 링크</label>
+                        <img src='${image}' id="modifyImage" class="card-img-top" alt="...">
+                        <input type="email" class="form-control" id="modifyImageUrl" placeholder="이미지 링크" value="">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modifyMbti" class="form-label">MBTI</label>
+                        <input type="text" class="form-control" id="modifyMbti" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyBlog" class="form-label">블로그</label>
+                        <input type="text" class="form-control" id="modifyBlog" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyDesc" class="form-label">자기소개</label>
+                        <input type="text" class="form-control" id="modifyDesc" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyPassword" class="form-label">비밀번호</label>
+                        <input type="text" class="form-control" id="modifyPassword" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button id="modifyMember" class="btn btn-warning"> 수정하기</button>
+                    <button class="btn btn-primary" data-bs-target="#memberInfoModal" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">닫기</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--삭제 모달-->
+    <div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="deleteModalLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel"> 삭제 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="deleteWarning" class="form-label">진짜 삭제하시겠습니까?</label>
+                </div>
+                <div class="modal-footer">
+
+                    <button id="deleteMember" class="btn btn-danger">삭제하기</button>
+                    <button class="btn btn-primary" data-bs-target="#memberInfoModal" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">닫기</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 체크 -->
+    <div class="modal fade" id="passwordCheckModal" aria-hidden="true" aria-labelledby="passwordCheckModalLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordCheckModalLabel">비밀번호 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="passwordCheck" class="form-label">비밀번호</label>
+                        <input type="text" class="form-control" id="passwordCheck">
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button id="checkPasswordBtn" type="button" class="btn btn-primary">확인</button>
+                    <button class="btn btn-primary" data-bs-target="#memberInfoModal" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form">
+        <h1>내일도개발하조</h1>
+        <div class="header">
+            <button class="createModal_btn">등록하기</button>
+        </div>
+        <div class="body">
+            <img class="bannerImg" src="https://i1.sndcdn.com/avatars-kxKDbgpqV3SMryL0-MPlCzQ-t240x240.jpg">
+        </div>
+        <div class="mainDetail_wrapper" id="tasks-container">
+            <div id="card" class="mainDetail_wrapper"></div>
+        </div>
+
+    </div>
+
+</body>
+
+<script src="./index.js" type="module"></script>
+
+</html>

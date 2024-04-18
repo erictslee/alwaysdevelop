@@ -1,0 +1,125 @@
+.createModal {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.createM_body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 500px;
+  padding: 40px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  margin: auto;
+  margin-top: 100px;
+
+  input {
+    margin-bottom: 20px;
+    width: 200px;
+    height: 30px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  width: 1440px;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 1440px;
+}
+
+.button_wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 130px;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 30px;
+  width: 140px;
+  height: 70px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.mainDetail_wrapper {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 1440px;
+
+  .card {
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 1px solid black;
+    width: 304px;
+    height: 473px;
+    margin-bottom: 20px;
+  }
+
+  .card img {
+    width: 304px;
+    height: 200px;
+  }
+
+  .card_detail {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 304px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 138px;
+  }
+
+  p {
+    height: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.bannerImg {
+  margin-top: 30px;
+  width: 1440px;
+  height: 250px;
+}
