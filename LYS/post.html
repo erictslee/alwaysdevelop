@@ -413,15 +413,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="post-name-input" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">비밀번호</label>
-                        <input type="password" class="persnalInput" id="post-password-input" placeholder="비밀번호"
-                        maxlength='4'>
-                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3"><label for="name" class="form-label">이름</label></div>
+                            <div class="mb-3"><input type="text" class="form-control" id="post-name-input" value=""></div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mb-3"><label for="name" class="form-label">비밀번호</label></div>
+                            <div class="mb-3"><input type="password" class="persnalInput" id="post-password-input" placeholder="비밀번호"
+                            maxlength='4'></div>
+                        </div>
+
+                    </row>
+
                     <div class="mb-3">
                         <label for="image" class="form-label">이미지 링크</label>
                         <input type="email" class="form-control" id="post-profile-image" placeholder="이미지 링크"
