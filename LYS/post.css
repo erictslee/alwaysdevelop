@@ -94,12 +94,15 @@
     justify-content: center;
     background-position: center;
     background-size: cover;
-    margin: 100px 50px 50px 50px;
+    margin: 75px 50px 0px 50px;
     cursor: pointer;
     font-family: "Black Han Sans", sans-serif;
-    font-weight: 400;
+    font-weight: 100;
     font-style: normal;
     padding: 30px;
+    background-color: rgb(253, 245, 228);
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
   }
   
   /*카드묶음*/
@@ -110,7 +113,7 @@
     justify-content: center;
     background-position: center;
     background-size: cover;
-    margin: 100px 50px 50px 50px;
+    margin: 30px 50px 50px 50px;
     cursor: pointer;
     font-family: "Black Han Sans", sans-serif;
     font-weight: 400;
