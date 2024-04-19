@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="post.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>프로필 수정</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Moirai+One&display=swap" rel="stylesheet">
+    <title>내일도 개발하조</title>
 </head>
 
 <script type="module">
@@ -17,23 +19,21 @@
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
     import { collection, addDoc, setDoc, getDocs, updateDoc, doc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-    // Firebase 구성 정보 설정
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyARY8uABRSypQJirp3PshlEYzjhDFgO5OE",
-        authDomain: "sparta-c5c78.firebaseapp.com",
-        projectId: "sparta-c5c78",
-        storageBucket: "sparta-c5c78.appspot.com",
-        messagingSenderId: "291620095748",
-        appId: "1:291620095748:web:ec8323f6ff0ba1c0483251",
-        measurementId: "G-XM6FEVSZFB"
+   // Firebase 구성 정보 설정
+   const firebaseConfig = {
+      apiKey: "AIzaSyB1QlRuXShksf8_z7N36HYL-aJTDJ5XW30",
+      authDomain: "alwaysdevelop-d7532.firebaseapp.com",
+      projectId: "alwaysdevelop-d7532",
+      storageBucket: "alwaysdevelop-d7532.appspot.com",
+      messagingSenderId: "1049945687826",
+      appId: "1:1049945687826:web:c4847d9af3bc41bcbe15cb"
     };
 
 
     // Firebase 인스턴스 초기화
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    
+
     const postModal = new bootstrap.Modal(document.getElementById('postModal'));
     const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
     const modifyModal = new bootstrap.Modal(document.getElementById('modifyModal'));
@@ -72,6 +72,7 @@
             displayComments(currentRow['id']);
 
             profileModal.show();
+            console.log("열림");
         }
         else {
             alert("데이터를 읽어오는데 문제가 발생했습니다.");
@@ -323,7 +324,7 @@
     });
 
     $("#post-submit-btn").click(async function () {
-        try{
+        try {
             let id = getGUID();
             let data = {
                 'id': id,
@@ -341,20 +342,38 @@
             window.location.reload();
 
             alert('업로드 성공!');
-        }catch(error){
+        } catch (error) {
             alert(error);
         }
     });
     //#endregion
 
-    // class가 card인 것을 찾은 뒤 click 이벤트 등록
-    // card가 동적으로 생성되므로 해당 코드를 그대로 사용하지말기
-    // 생성되는 카드마다 이벤트 추가하여 사용
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', async function () {
+    /*등록된 정보를 db에 저장*/
+    let docs = await getDocs(collection(db, "members"));
 
-            const cardId = this.getAttribute('data-id');
-            console.log("card id : " + cardId);
+    docs.forEach((doc) => {
+        let row = doc.data();
+        let id = row['id'];
+        console.log(id);
+        let image = row['img']; //입력하는 값 그대로 도출. 이미지 링크
+        let name = row['name']; //입력하는 값 그대로 도출. 이름
+        console.log(id);
+
+        let temp_html = ` 
+        <div class="col">
+                <div class="card" data-id="${id}" style="width:300px; height: 100%;">
+                    <img src="${image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                    </div>
+                </div>
+            </div>`;
+        $('#cards').append(temp_html);
+
+        const card = document.querySelector(`[data-id="${id}"]`);
+        card.addEventListener('click', async function () {
+            const clickedCardId = this.getAttribute('data-id');
+
             if (currentRow == null || currentRow['id'] != cardId) {
                 if (currentRow)
                     currentRow = null;
@@ -362,19 +381,12 @@
                 let docs = await getDocs(collection(db, "members"));
 
                 docs.forEach((doc) => {
-                    console.log(1);
                     let row = doc.data();
-                    console.log(row['id']);
-                    console.log(row['name']);
-                    console.log(row['password']);
-                    console.log(row['blog']);
-
-                    if (row['id'] == cardId) {
+                    if (row['id'] == clickedCardId) {
                         currentRow = row;
                     }
                 })
             }
-
             openProfileModal(currentRow);
         });
     });
@@ -383,29 +395,75 @@
 
 
 <body>
-    <div class="card-group">
-        <!-- 테스트용 카드, 카드 만들때 data-id 필요 -->
-        <div class="card" data-id="3b19a447-72c6-944b-e91d-daebea285f1c">
-            <div class="card-body">
-                <h5 class="card-title">Card 1</h5>
-                <p class="card-text">Click to open popup.</p>
-            </div>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"></svg>
+            <span class="fs-4" onclick="window.location.reload();">Always Develop</span>
+          </a>
+    
+          <ul class="nav nav-pills">
+            
+            <li class="nav-item"><a href="https://teamsparta.notion.site/8ad28066b39e456da73213cf2ce280f9"
+                class="btn btn-dark" aria-current="page">Notion</a></li>
+            <li class="nav-item"><a href="https://github.com/erictslee/alwaysdevelop" class="btn btn-secondary"
+                aria-current="page">Git Hub</a></li>
+                <i class="fa-brands fa-github"></i>
+            <button type="button" class="btn btn-primary" id="posting-btn">등록하기</button>
+            
+          </ul>
+        </header>
+    </div>
+
+    <div class="mytitle" onclick="window.location.reload();">
+        <p></p>
+        <p></p>
+        <h1 style="font-size: 100px;">내일도 개발하조</h1>
+        <p></p>
+        <h3>오늘도 내일도 모레도 개발하조</h3>
+        <p style="font-size: 25px; color:rgb(30, 201, 138)"> </p>
+    </div>
+
+    <div class="subtitle">
+        <div class="mb-3">
+            <h5> 우리 팀만의 특징 적는 곳</h5>
         </div>
-        <div class="card" data-id="d904bc82-e55b-8220-513c-fec0028d8088">
-            <div class="card-body">
-                <h5 class="card-title">Card 2</h5>
-                <p class="card-text">Click to open popup.</p>
-            </div>
+        <div class="mb-3">
+            <h3> 우리팀의 약속 </h3>
+        </div>
+        <div class="mb-3">
+            <h7> 상냥하게 말하기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7>  서로 모르는 것 있으면 알려주기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7> 각자 맡은 역할 열심히 하기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7> 지각하거나 빠지게 될 경우 미리 알려주기 </h7>
         </div>
     </div>
 
+    <!-- 카드 리스트 -->
+    <div class="card-group">
+        <div id="cards" class="row row-cols-1 row-cols-md-4 g-4">
+        </div>
+    </div>
 
-    <button type="button" class="btn btn-primary" id="posting-btn">
-        글쓰기
-    </button>
+    <div class="footer">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+              <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">2024 오늘도 개발하조</span>
+          </div>
+        </footer>
+    </div>
 
-     <!--쓰기 모달-->
-     <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <!--쓰기 모달-->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -413,44 +471,46 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3"><label for="name" class="form-label">이름</label></div>
-                            <div class="mb-3"><input type="text" class="form-control" id="post-name-input" value=""></div>
+                            <div class="mb-3"><input type="text" class="form-control" id="post-name-input" value="">
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="mb-3"><label for="name" class="form-label">비밀번호</label></div>
-                            <div class="mb-3"><input type="password" class="persnalInput" id="post-password-input" placeholder="비밀번호"
-                            maxlength='4'></div>
+                            <div class="mb-3"><input type="password" class="persnalInput" id="post-password-input"
+                                    placeholder="비밀번호" maxlength='4'></div>
                         </div>
 
-                    </row>
+                        </row>
 
-                    <div class="mb-3">
-                        <label for="image" class="form-label">이미지 링크</label>
-                        <input type="email" class="form-control" id="post-profile-image" placeholder="이미지 링크"
-                            value="">
+                        <div class="mb-3">
+                            <label for="image" class="form-label">이미지 링크</label>
+                            <input type="email" class="form-control" id="post-profile-image" placeholder="이미지 링크"
+                                value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyMbti" class="form-label">MBTI</label>
+                            <input type="text" class="form-control" id="post-mbti-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyBlog" class="form-label">블로그 주소</label>
+                            <input type="text" class="form-control" id="post-blog-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyDesc" class="form-label">장점</label>
+                            <input type="text" class="form-control" id="post-advantage-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyDesc" class="form-label">협업 스타일 소개</label>
+                            <input type="text" class="form-control" id="post-teamwork-input" value="">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="modifyMbti" class="form-label">MBTI</label>
-                        <input type="text" class="form-control" id="post-mbti-input" value="">
+                    <div class="modal-footer justify-content-end">
+                        <button id="post-submit-btn" class="btn btn-warning">등록하기</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="modifyBlog" class="form-label">블로그 주소</label>
-                        <input type="text" class="form-control" id="post-blog-input" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="modifyDesc" class="form-label">장점</label>
-                        <input type="text" class="form-control" id="post-advantage-input" value="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="modifyDesc" class="form-label">협업 스타일 소개</label>
-                        <input type="text" class="form-control" id="post-teamwork-input" value="">
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end">
-                    <button id="post-submit-btn" class="btn btn-warning">등록하기</button>
                 </div>
             </div>
         </div>
