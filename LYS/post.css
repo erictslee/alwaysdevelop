@@ -127,8 +127,11 @@
   /*카드*/
   .card {
     transition: transform 0.3s ease;
-  
   }
+
+  .card-img-top {
+    object-fit: cover;
+}
   
   /*카드 호버링 기능*/
   .card:hover {
