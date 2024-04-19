@@ -1,3 +1,55 @@
+/* .card-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} */
+
+.card-group .card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.comment-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.comment-date {
+  white-space: nowrap;
+}
+
+.subtitle1 {
+  background-color: antiquewhite;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.comment-list{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.modal-dialog .modal-body{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.modal-dialog .modal-body .form-control {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.comments{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
 /*타이틀*/
 .mytitle {
   margin: 0px auto 0px auto;
@@ -21,24 +73,42 @@
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 90px;
+  margin-top: 75px;
   width: 100%;
-  height: 250px;
+  height: 700px;
   background-image: url("https://velog.velcdn.com/images/eirclee/post/8a40a89f-e8f7-4466-8617-394b4e047dbf/image.png");
   background-size: cover;
   filter: blur(6px);
   z-index: -1;
 }
-
 /*카드묶음*/
-.mycards {
+.subtitle {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-position: center;
   background-size: cover;
-  margin: 100px 50px 50px 50px;
+  margin: 75px 50px 0px 50px;
+  cursor: pointer;
+  font-family: "Black Han Sans", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  padding: 30px;
+  background-color: rgb(253, 245, 228);
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
+}
+
+/*카드묶음*/
+.card-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  margin: 30px 50px 50px 50px;
   cursor: pointer;
   font-family: "Black Han Sans", sans-serif;
   font-weight: 400;
@@ -48,6 +118,7 @@
   border-radius: 20px;
   box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
 }
+
 
 /*카드*/
 .card {
@@ -72,13 +143,6 @@
   background-color: white;
 }
 
-/*모달창 내부 버튼*/
-.modalbtn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
 
 .container>button {
   display: inline-block;
