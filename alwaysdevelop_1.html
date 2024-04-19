@@ -1,33 +1,222 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8"> ㅁㄴㅁㄹㄴㅇㅁㅁㄴㅇ
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내일도 개발하조</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="post.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Moirai+One&display=swap" rel="stylesheet">
+    <title>내일도 개발하조</title>
+    <style>
+      /* .card-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} */
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+.card-group .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+.profile-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Moirai+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="alwaysdevelop_1.css">
+.comment-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
-  <script type="module">
-    // Firebase SDK 라이브러리 가져오기 test text
+.comment-date {
+    white-space: nowrap;
+}
+
+.subtitle1 {
+    background-color: antiquewhite;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.comment-list{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.modal-dialog .modal-body{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.modal-dialog .modal-body .form-control {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.comments{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+/*타이틀*/
+.mytitle {
+    margin: 0px auto 0px auto;
+    height: 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    font-family: "Moirai One", system-ui;
+    font-weight: 1000;
+    font-style: normal;
+    cursor: pointer;
+  }
+  
+  /*타이틀 블러처리 및 배경사진 설정*/
+  .mytitle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 75px;
+    width: 100%;
+    height: 700px;
+    background-image: url("https://velog.velcdn.com/images/eirclee/post/8a40a89f-e8f7-4466-8617-394b4e047dbf/image.png");
+    background-size: cover;
+    filter: blur(6px);
+    z-index: -1;
+  }
+  /*카드묶음*/
+  .subtitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    margin: 75px 50px 0px 50px;
+    cursor: pointer;
+    font-family: "Black Han Sans", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    padding: 30px;
+    background-color: rgb(253, 245, 228);
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
+  }
+  
+  /*카드묶음*/
+  .card-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    margin: 30px 50px 50px 50px;
+    cursor: pointer;
+    font-family: "Black Han Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 30px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgb(124, 124, 124);
+  }
+  
+  
+  /*카드*/
+  .card {
+    transition: transform 0.3s ease;
+  
+  }
+  
+  /*카드 호버링 기능*/
+  .card:hover {
+    transform: scale(1.15);
+  }
+  
+  
+  /*등록하기창*/
+  .mypostingbox {
+    width: 500px;
+    height: 500px;
+    margin: 30px auto 0px auto;
+    padding: 50px 20px 20px 20px;
+    box-shadow: 0px 0px 10px 0px black;
+    border-radius: 20px;
+    background-color: white;
+  }
+  
+  
+  .container>button {
+    display: inline-block;
+    /* 인라인 블록 요소로 설정하여 가로 정렬 */
+    width: auto;
+    /* 너비 자동으로 조정 */
+    height: auto;
+    /* 높이 자동으로 조정 */
+    padding-left: 60px;
+    /* 내부 여백 제거 */
+    border-radius: 10px;
+    /* 테두리 제거 */
+    color: black;
+    /* 텍스트 색상 설정 */
+  }
+  
+  /*등록하기 창 내 닫기 버튼*/
+  .btn-close {
+    display: inline-block;
+    /* 인라인 블록 요소로 설정하여 가로 정렬 */
+    width: auto;
+    /* 너비 자동으로 조정 */
+    height: auto;
+    /* 높이 자동으로 조정 */
+    padding-left: 60px;
+    /* 내부 여백 제거 */
+    border-radius: 10px;
+    /* 테두리 제거 */
+    color: black;
+    /* 텍스트 색상 설정 */
+  }
+  
+  /*등록하기 창 내 버튼 간 간격*/
+  .mybtn>button {
+    margin: 5px;
+  }
+  
+  .nav-pills .nav-item {
+    margin-right: 10px;
+    /* 각 버튼에 오른쪽 마진 추가 */
+    display: inline-block;
+    /* 버튼들이 인라인으로 표시되도록 설정 */
+  }
+  
+  /* 마지막 버튼의 마진 제거 */
+  .nav-pills .nav-item:last-child {
+    margin-right: 0;
+  }
+  
+    </style>
+</head>
+
+<script type="module">
+
+    // Firebase SDK 라이브러리 가져오기
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { collection, addDoc, setDoc, getDocs, updateDoc, doc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-    // Firebase 구성 정보 설정
-    const firebaseConfig = {
+   // Firebase 구성 정보 설정
+   const firebaseConfig = {
       apiKey: "AIzaSyB1QlRuXShksf8_z7N36HYL-aJTDJ5XW30",
       authDomain: "alwaysdevelop-d7532.firebaseapp.com",
       projectId: "alwaysdevelop-d7532",
@@ -36,180 +225,644 @@
       appId: "1:1049945687826:web:c4847d9af3bc41bcbe15cb"
     };
 
+
     // Firebase 인스턴스 초기화
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    $("#postingbtn").click(async function () {
+    const postModal = new bootstrap.Modal(document.getElementById('postModal'));
+    const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+    const modifyModal = new bootstrap.Modal(document.getElementById('modifyModal'));
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const passwordCheckModal = new bootstrap.Modal(document.getElementById('passwordCheckModal'));
 
-      let image = $('#image').val(); //이미지 도출.
-      let title = $('#title').val(); //이름 도출.
-      let mbti = $('#mbti').val(); //MBTI 도출.
-      let address = $('#address').val(); //블로그 도출.
-      let text = $('#text').val(); //본인 설명 도출.
+    // 현재 띄워놓은 데이터
+    let currentRow = null;
+
+    // 수정/삭제 토글
+    let isModify = false;
+    // 프로필 창이 다시 열리는 것 막기
+    let preventProfileModalOpen = false;
 
 
-      let doc = {
-        'image': image,
-        'title': title,
-        'mbti': mbti,
-        'address': address,
-        'text': text
+    //#region modal
 
-      };
+    function openProfileModal(row) {
+        if (row) {
+            const profileImg = document.getElementById('profile-img');
+            const nameLabel = document.getElementById('name-label');
+            const mbtiLabel = document.getElementById('mbti-label');
+            const blogLabel = document.getElementById('blog-label');
+            const advantageLabel = document.getElementById('user-advantage');
+            const teamworkStyleLabel = document.getElementById('user-teamworkStyle');
 
-      /*등록 완료 후 메인페이로 이동*/
-      await addDoc(collection(db, "alwaysdevelop"), doc);
-      alert('저장 완료');
-      window.location.reload();
+            const name = row['name'];
+
+            profileImg.src = row['img'];
+            nameLabel.innerHTML = `<h5>${name}</h5>`;
+            mbtiLabel.textContent = row['mbti'];
+            blogLabel.innerHTML = `<a target="_blank" href="${row['blog']}">${name}의 블로그</a>`;
+            advantageLabel.textContent = row['advantage'];
+            teamworkStyleLabel.textContent = row['teamwork'];
+
+            displayComments(currentRow['id']);
+
+            profileModal.show();
+        }
+        else {
+            alert("데이터를 읽어오는데 문제가 발생했습니다.");
+        }
+    }
+
+    function openModifyModal(row) {
+        if (row) {
+            const profileImg = document.getElementById('modify-profile-image');
+            const nameLabel = document.getElementById('modify-name-label');
+            const mbtiLabel = document.getElementById('modify-mbti-label');
+            const blogLabel = document.getElementById('modify-blog-label');
+            const advantageLabel = document.getElementById('modify-advantage-label');
+            const teamworkStyleLabel = document.getElementById('modify-teamwork-label');
+
+            profileImg.value = row['img'];
+            nameLabel.value = row['name'];
+            mbtiLabel.value = row['mbti'];
+            blogLabel.value = row['blog'];
+            advantageLabel.value = row['advantage'];
+            teamworkStyleLabel.value = row['teamwork'];
+
+            modifyModal.show();
+        }
+        else {
+            alert("데이터를 읽어오는데 문제가 발생했습니다.");
+        }
+    }
+
+    //#endregion
+
+
+
+    //#region Util
+
+    // GUID 얻어오는 함수
+    function getGUID() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
+
+    // 날짜 포맷팅 함수
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    //#endregion
+
+
+    //#region Comment
+    const commentText = document.getElementById('commentText');
+    const commentCharCount = document.getElementById('commentCharCount');
+
+
+
+    // 댓글 입력 필드 초기화
+    function initCommentTextField() {
+        commentText.value = '';
+        commentCharCount.textContent = '0';
+    }
+
+    // 댓글 목록 표시 함수
+    async function displayComments(postId) {
+        const commentList = document.querySelector('.comment-list');
+        commentList.innerHTML = '';
+
+        const q = query(collection(db, 'comments'), where('postId', '==', postId));
+        const querySnapshot = await getDocs(q);
+        const comments = querySnapshot.docs.map((doc) => doc.data());
+
+        // 댓글을 최신 순으로 정렬
+        comments.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+
+        comments.forEach((commentData) => {
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment', 'mb-3');
+            // 방명록과 댓글이 겹칠 경우 분리하기
+            commentElement.innerHTML = `
+            <div class="d-flex">
+                <div class="comment-content flex-grow-1">
+                    <p>${commentData.content}</p>
+                </div>
+                <div class="comment-date text-muted ms-3">
+                    <small>${formatDate(commentData.timestamp.toDate())}</small>
+                </div>
+            </div>
+        `;
+            commentList.appendChild(commentElement);
+        });
+    }
+    //#endregion
+
+
+    //#region Event
+    // 프로필 모달이 열릴 때 댓글 목록 표시
+    // profileModal._element.addEventListener('shown.bs.modal', function () {
+    //     if (currentRow) {
+    //         displayComments(currentRow['id']);
+    //     }
+    // });
+
+    // 페이지가 새로고침되었을 때 캐시된 정보가 안바뀌는 경우 방지
+    window.addEventListener('beforeunload', (event) => {
+        event.preventDefault();
+        currentRow = null;
     })
 
-    /*등록된 정보를 db에 저장*/
-    let docs = await getDocs(collection(db, "alwaysdevelop"));
-    docs.forEach((doc) => {
-      let row = doc.data();
+    function hiddenModalEvent() {
+        if (!preventProfileModalOpen) {
+            openProfileModal(currentRow);
+        }
+        preventProfileModalOpen = false;
+    }
 
-      let image = row['image']; //입력하는 값 그대로 도출. 이미지 링크
-      let title = row['title']; //입력하는 값 그대로 도출. 이름
-      let mbti = row['mbti']; //입력하는 값 그대로 도출. mbti
-      let address = row['address']; //입력하는 값 그대로 도출. 블로그 주소
-      let text = row['text']; //입력하는 값 그대로 도출. 설명
-
-
-      /*입력한 정보를 카드로 생성*/
-
-      let temp_html = ` 
-     
-      <div class="col" >
-        <div class="card h-100">
-          <img src="${image}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">${mbti}</p>
-            <p class="card-text">${text}</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-body-secondary">${address}
-  
-            </small>
-          </div>
-        </div>
-      </div>`;
-      $('#card').append(temp_html);
+    //postModal이 닫힐 때 초기화
+    profileModal._element.addEventListener('hidden.bs.modal', function () {
+        initCommentTextField();
     });
-   
-  
-  </script>
-</head>
+
+
+    modifyModal._element.addEventListener('hidden.bs.modal', function () { hiddenModalEvent() });
+
+    deleteModal._element.addEventListener('hidden.bs.modal', function () { hiddenModalEvent() })
+
+    passwordCheckModal._element.addEventListener('hidden.bs.modal', function () {
+        hiddenModalEvent();
+        $("#password-check-input").val('');
+    });
+
+
+    $("#modify-btn").click(async function () {
+        profileModal.hide();
+        passwordCheckModal.show();
+        isModify = true;
+        //modifyModal.show();
+    })
+
+    $("#delete-btn").click(async function () {
+        profileModal.hide();
+        passwordCheckModal.show();
+        isModify = false;
+        //deleteModal.show();
+    })
+
+    // 패스워드 확인 요청
+    $("#password-check-btn").click(async function () {
+        if (currentRow) {
+            const password = $("#password-check-input").val();
+            if (currentRow['password'] == password) {
+                preventProfileModalOpen = true;
+                passwordCheckModal.hide();
+
+                if (isModify)
+                    openModifyModal(currentRow);
+                else
+                    deleteModal.show();
+            }
+            else {
+                alert("비밀번호가 다릅니다.");
+            }
+        }
+        else {
+            alert("오류가 발생했습니다.");
+            passwordCheckModal.hide();
+        }
+        //deleteModal.show();
+    })
+
+    // input field의 내용이 변경될 때마다 호출되는 이벤트
+    // 숫자 제한에서 얼마나 입력되었는지 표기함
+    commentText.addEventListener('input', function () {
+        const charCount = commentText.value.length;
+        commentCharCount.textContent = charCount;
+    })
+
+    // 댓글 작성 버튼 클릭 이벤트 처리
+    $("#comment-submit-btn").click(async function () {
+        const comment = commentText.value.trim();
+
+        if (comment !== '') {
+            const commentData = {
+                postId: currentRow['id'],
+                content: comment,
+                timestamp: new Date()
+            };
+
+            try {
+                const docRef = await addDoc(collection(db, 'comments'), commentData);
+
+                initCommentTextField();
+
+                // 댓글 목록 갱신
+                displayComments(currentRow['id']);
+            } catch (error) {
+                console.error('Error adding comment: ', error);
+            }
+        }
+    });
+
+    // 수정 버튼 클릭 시 이벤트 처리
+    
+    $("#modify-submit-btn").click(async function () {
+        try {
+            const documentId = currentRow['id'];
+            const documentRef = doc(db, "members", documentId);
+
+            await updateDoc(documentRef, {
+                'name': $('#modify-name-label').val(),
+                'img': $('#modify-profile-image').val(),
+                'mbti': $('#modify-mbti-label').val(),
+                'blog': $('#modify-blog-label').val(),
+                'advantage': $('#modify-advantage-label').val(),
+                'teamwork': $('#modify-teamwork-label').val()
+            });
+            alert('수정완료!');
+            window.location.reload();
+        }
+        catch (error) {
+            alert("error:" + error);
+        }
+    });
+
+    $("#delete-submit-btn").click(async function () {
+        try {
+            const documentId = currentRow['id'];
+            const documentRef = doc(db, "members", documentId);
+
+            await deleteDoc(documentRef);
+            alert('수정완료!');
+            window.location.reload();
+        } catch (error) {
+            alert("error:" + error);
+        }
+    });
+
+    $("#posting-btn").click(async function () {
+        postModal.show();
+    });
+
+    $("#post-submit-btn").click(async function () {
+        try {
+            let id = getGUID();
+            let data = {
+                'id': id,
+                'name': $('#post-name-input').val(),
+                'password': $('#post-password-input').val(),
+                'img': $('#post-profile-image').val(),
+                'mbti': $('#post-mbti-input').val(),
+                'blog': $('#post-blog-input').val(),
+                'advantage': $('#post-advantage-input').val(),
+                'teamwork': $('#post-teamwork-input').val(),
+                'timestamp': new Date()
+            };
+
+            await setDoc(doc(db, "members", String(id)), data);
+            window.location.reload();
+
+            alert('업로드 성공!');
+        } catch (error) {
+            alert(error);
+        }
+    });
+    //#endregion
+
+    /*등록된 정보를 db에 저장*/
+    let docs = await getDocs(collection(db, "members"));
+
+    docs.forEach((doc) => {
+        let row = doc.data();
+        let id = row['id'];
+        let image = row['img']; //입력하는 값 그대로 도출. 이미지 링크
+        let name = row['name']; //입력하는 값 그대로 도출. 이름
+
+        let temp_html = ` 
+        <div class="col">
+                <div class="card" data-id="${id}" style="width:100%; height: 100%;">
+                    <img src="${image}" class="card-img-top" style="width:100%; height: 100%;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                    </div>
+                </div>
+            </div>`;
+        $('#cards').append(temp_html);
+
+        const card = document.querySelector(`[data-id="${id}"]`);
+        card.addEventListener('click', async function () {
+            const clickedCardId = this.getAttribute('data-id');
+
+            if (currentRow == null || currentRow['id'] != clickedCardId) {
+                if (currentRow)
+                    currentRow = null;
+                let docs = await getDocs(collection(db, "members"));
+
+                docs.forEach((doc) => {
+                    let row = doc.data();
+                    if (row['id'] == clickedCardId) {
+                        currentRow = row;
+                    }
+                })
+            }
+            openProfileModal(currentRow);
+        });
+    });
+
+</script>
+
 
 <body>
-  <div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"></svg>
-        <span class="fs-4" onclick="window.location.reload();">Always Develop</span>
-      </a>
-
-      <ul class="nav nav-pills">
-        
-        <li class="nav-item"><a href="https://teamsparta.notion.site/8ad28066b39e456da73213cf2ce280f9"
-            class="btn btn-dark" aria-current="page">Notion</a></li>
-        <li class="nav-item"><a href="https://github.com/erictslee/alwaysdevelop" class="btn btn-secondary"
-            aria-current="page">Git Hub</a></li>
-            <i class="fa-brands fa-github"></i>
-        <button type="button" class="btn btn-primary active btn-open-modal">등록하기</button>
-        
-      </ul>
-    </header>
-  </div>
-
-
-  <div class="mytitle" onclick="window.location.reload();">
-    <p></p>
-    <p></p>
-    <h1 style="font-size: 100px;">내일도 개발하조</h1>
-    <p></p>
-    <h3>오늘도 내일도 모레도 개발하조</h3>
-    <p style="font-size: 25px; color:rgb(30, 201, 138)"> </p>
-  </div>
-
-  <div class="modal">
-    <div class="modal_body mypostingbox">
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="image" placeholder="이미지">
-        <label for="floatingInput">이미지 링크</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="title" placeholder="이름">
-        <label for="floatingInput">이름</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="mbti" placeholder="MBTI">
-        <label for="floatingInput">MBTI</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="address" placeholder="블로그">
-        <label for="floatingInput">블로그</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="text" placeholder="설명">
-        <label for="floatingInput">나에 대한 설명</label>
-      </div>
-      <div class="modalbtn">
-        <button id="postingbtn" type="button" class="btn btn-secondary">기록하기</button>
-        <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">닫기</button>
-      </div>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"></svg>
+            <span class="fs-4" onclick="window.location.reload();">Always Develop</span>
+          </a>
+    
+          <ul class="nav nav-pills">
+            
+            <li class="nav-item"><a href="https://teamsparta.notion.site/8ad28066b39e456da73213cf2ce280f9"
+                class="btn btn-dark" aria-current="page">Notion</a></li>
+            <li class="nav-item"><a href="https://github.com/erictslee/alwaysdevelop" class="btn btn-secondary"
+                aria-current="page">Git Hub</a></li>
+                <i class="fa-brands fa-github"></i>
+            <button type="button" class="btn btn-primary" id="posting-btn">등록하기</button>
+            
+          </ul>
+        </header>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const modal = document.querySelector('.modal');
-    const btnOpenModal = document.querySelector('.btn-open-modal');
-    const btnCloseModal = document.querySelector('.btn-close');
-
-    /*모달 열기*/
-    btnOpenModal.addEventListener("click", () => {
-      modal.style.display = "flex";
-
-    });
-    /*모달 닫기 ㅇㅇ*/
-    btnCloseModal.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-
-    /*모달 바깥 부분 클릭하면 모달 닫기*/
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>
-
-
-
-  <div class="mycards">
-    <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-
+    <div class="mytitle" onclick="window.location.reload();">
+        <p></p>
+        <p></p>
+        <h1 style="font-size: 100px;">내일도 개발하조</h1>
+        <p></p>
+        <h3>오늘도 내일도 모레도 개발하조</h3>
+        <p style="font-size: 25px; color:rgb(30, 201, 138)"> </p>
     </div>
-  </div>
 
-  <div class="footer">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-        </a>
-        <span class="mb-3 mb-md-0 text-body-secondary">2024 오늘도 개발하조</span>
-      </div>
-  
-      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-      </ul>
-    </footer>
-  </div>
+    <div class="subtitle">
+        <div class="mb-3" style="text-align: center;">
+            <h3> 우리 팀만의 특징</h3>
+            <p></p>
+            <h7>우리 ‘오늘도 개발하조’ 팀은 이름에서 알 수 있듯이 팀원 모두 오늘도 내일도 모레도 개발하겠다는 강한 의지를 가지고 있습니다. </h7>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+        <div class="mb-3">
+            <h3> 우리팀의 약속 </h3>
+        </div>
+        <div class="mb-3">
+            <h7> 상냥하게 말하기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7>  서로 모르는 것 있으면 알려주기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7> 각자 맡은 역할 열심히 하기 </h7>
+        </div>
+        <div class="mb-3">
+            <h7> 지각하거나 빠지게 될 경우 미리 알려주기 </h7>
+        </div>
+    </div>
+
+    <!-- 카드 리스트 -->
+    <div class="card-group">
+        <div id="cards" class="row row-cols-1 row-cols-md-4 g-4">
+        </div>
+    </div>
+
+    <div class="footer">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+              <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">2024 오늘도 개발하조</span>
+          </div>
+        </footer>
+    </div>
+
+    <!--쓰기 모달-->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel">멤버 등록하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3"><label for="name" class="form-label">이름</label></div>
+                            <div class="mb-3"><input type="text" class="form-control" id="post-name-input" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mb-3"><label for="name" class="form-label">비밀번호</label></div>
+                            <div class="mb-3"><input type="password" class="persnalInput" id="post-password-input"
+                                    placeholder="비밀번호" maxlength='4'></div>
+                        </div>
+
+                        </row>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">이미지 링크</label>
+                            <input type="email" class="form-control" id="post-profile-image" placeholder="이미지 링크"
+                                value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyMbti" class="form-label">MBTI</label>
+                            <input type="text" class="form-control" id="post-mbti-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyBlog" class="form-label">블로그 주소</label>
+                            <input type="text" class="form-control" id="post-blog-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyDesc" class="form-label">장점</label>
+                            <input type="text" class="form-control" id="post-advantage-input" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="modifyDesc" class="form-label">협업 스타일 소개</label>
+                            <input type="text" class="form-control" id="post-teamwork-input" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button id="post-submit-btn" class="btn btn-warning">등록하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--읽기 모달-->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">멤버 소개</h5>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn me-2" id="modify-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 20 20">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn me-2" id="delete-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 20 20">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="profile.jpg" alt="프로필 이미지" class="img-fluid rounded mb-3 profile-img"
+                                id="profile-img">
+                        </div>
+                        <div class="col-md-5">
+                            &nbsp
+                            <div class="mb-3"><label for="user-name" id="name-label"></label></div>
+                            <div class="mb-3"><label for="user-name" id="mbti-label"></label></div>
+                            <div class="mb-3"><label for="blog-name" id="blog-label"><a target="_blank"
+                                        href="https://www.naver.com/"></a></label></div>
+                        </div>
+                    </div>
+                    <h6 class="subtitle1"><b>장점</b></h6>
+                    <div class="form-control description-scroll" id="user-advantage"
+                        style="max-height: 100px; overflow-y: auto;"></div>
+                    &nbsp
+                    <h6 class="subtitle1"><b>나만의 협업 스타일</b></h6>
+                    <div class="form-control description-scroll" id="user-teamworkStyle"
+                        style="max-height: 100px; overflow-y: auto;"></div>
+                </div>
+                <div class="comments mt-4">
+                    <h6 class="subtitle1"><b>방명록</b></h6>
+                    <div class="comment-list" style="max-height: 100px; overflow-y: auto;">
+                        <!-- 댓글 목록이 여기에 동적으로 추가됩니다 -->
+                    </div>
+                    <div class="comment-form mt-3">
+                        <textarea class="form-control" id="commentText" rows="2" placeholder="방명록을 남겨주세요 (최대 120자)"
+                            maxlength="120"></textarea>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted"><span id="commentCharCount">0</span>/120자</small>
+                            <button type="button" class="btn btn-primary" id="comment-submit-btn">방명록 작성</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--삭제 모달-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel">멤버 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>정말 삭제하시겠습니까?</h5>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button id="delete-submit-btn" class="btn btn-warning">삭제하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--수정 모달-->
+    <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel">유저 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="modifyName" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="modify-name-label" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyImage" class="form-label">이미지 링크</label>
+                        <input type="email" class="form-control" id="modify-profile-image" placeholder="이미지 링크"
+                            value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyMbti" class="form-label">MBTI</label>
+                        <input type="text" class="form-control" id="modify-mbti-label" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyBlog" class="form-label">블로그 주소</label>
+                        <input type="text" class="form-control" id="modify-blog-label" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyDesc" class="form-label">장점</label>
+                        <input type="text" class="form-control" id="modify-advantage-label" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifyDesc" class="form-label">협업 스타일 소개</label>
+                        <input type="text" class="form-control" id="modify-teamwork-label" value="">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button id="modify-submit-btn" class="btn btn-warning">수정하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--비밀번호 확인-->
+    <div class="modal fade" id="passwordCheckModal" aria-hidden="true" aria-labelledby="passwordCheckModalLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberInfoModalLabel">비밀번호 확인</h5>
+                    <button type="button" class="btn-close" id="password-check-cancel-btn" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="passwordCheck2" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="password-check-input">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button id="password-check-btn" type="button" class="btn btn-primary">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
