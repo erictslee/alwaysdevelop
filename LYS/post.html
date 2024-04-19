@@ -72,7 +72,6 @@
             displayComments(currentRow['id']);
 
             profileModal.show();
-            console.log("열림");
         }
         else {
             alert("데이터를 읽어오는데 문제가 발생했습니다.");
@@ -185,7 +184,6 @@
     // 페이지가 새로고침되었을 때 캐시된 정보가 안바뀌는 경우 방지
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault();
-        console.log("페이지 새로고침 됨");
         currentRow = null;
     })
 
@@ -230,8 +228,6 @@
     $("#password-check-btn").click(async function () {
         if (currentRow) {
             const password = $("#password-check-input").val();
-            console.log("input" + password);
-            console.log("currentRow" + currentRow['password']);
             if (currentRow['password'] == password) {
                 preventProfileModalOpen = true;
                 passwordCheckModal.hide();
@@ -272,7 +268,6 @@
 
             try {
                 const docRef = await addDoc(collection(db, 'comments'), commentData);
-                console.log('Comment added with ID: ', docRef.id);
 
                 initCommentTextField();
 
@@ -354,10 +349,8 @@
     docs.forEach((doc) => {
         let row = doc.data();
         let id = row['id'];
-        console.log(id);
         let image = row['img']; //입력하는 값 그대로 도출. 이미지 링크
         let name = row['name']; //입력하는 값 그대로 도출. 이름
-        console.log(id);
 
         let temp_html = ` 
         <div class="col">
@@ -374,10 +367,9 @@
         card.addEventListener('click', async function () {
             const clickedCardId = this.getAttribute('data-id');
 
-            if (currentRow == null || currentRow['id'] != cardId) {
+            if (currentRow == null || currentRow['id'] != clickedCardId) {
                 if (currentRow)
                     currentRow = null;
-                console.log("id 다름");
                 let docs = await getDocs(collection(db, "members"));
 
                 docs.forEach((doc) => {
